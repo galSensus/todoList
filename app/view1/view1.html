@@ -1,0 +1,17 @@
+<p>My to do list:</p>
+<ul>
+    <div ng-repeat="task in vm.todoList">
+         <li>
+             <span>{{ task.title }}</span>
+             <span>{{ task.details }}</span>
+             <span>{{ task.date }}</span>
+             <button ng-click="vm.showEdit(task)">Edit</button>
+        </li>
+    </div>
+    <form ng-submit="vm.editTask()" ng-if="vm.edit">
+            Title:<input type="text" name="title" ng-model="vm.task.title"> <br>
+            Details:<input type="text"name="details" ng-model="vm.task.details"> <br>
+            Date:<input type="text" name="date" ng-model="vm.task.date">
+            <input type="submit">
+    </form>
+</ul>
