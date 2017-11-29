@@ -10,7 +10,7 @@ app.config(['$routeProvider', function($routeProvider) {
   });
 }]);
   
-app.service('todoService', function(){
+app.service('todoService', function($http){
 
   this.add = add;
   this.save = save;
@@ -21,12 +21,22 @@ app.service('todoService', function(){
     task.id = index;
     this.todoList.push(task);
     index++;
-    save(this.todoList);
+    save(task);
   }
 
-  function save(todoList){
-    var myJSON = JSON.stringify(todoList);
-    localStorage.setItem("todoList", myJSON);
+  function save(task){
+    $http.post('//localhost/todoList/api/values',"").success(function(resp){
+      debugger;
+      var ans = resp;
+    });
+
+  }
+
+  function getData(){
+    $http.get('//localhost/todoList/api/values').success(function(resp){
+      debugger;
+      var ans = resp;
+    });
   }
 
 
