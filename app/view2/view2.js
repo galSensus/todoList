@@ -15,9 +15,7 @@ app.controller('View2Ctrl', function(todoService) {
   vm.add = add;
 
   function add(){
-    todoService.add({title: vm.title, details: vm.details, date: vm.date});
-    vm.title = '';
-    vm.details = '';
-    vm.date = '';
+    todoService.add(vm.task);
+
   }
 });

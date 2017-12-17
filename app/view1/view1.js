@@ -25,10 +25,12 @@ app.service('todoService', function($http){
   }
 
   function save(task){
-    $http.post('//localhost/todoList/api/values',"").success(function(resp){
+    debugger;
+    $http.post("//localhost/todoList/api/task/addTask", task).success(function(resp){
       debugger;
       var ans = resp;
     });
+
 
   }
 
