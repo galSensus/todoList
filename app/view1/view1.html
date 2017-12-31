@@ -11,7 +11,7 @@
     <form ng-submit="vm.editTask()" ng-if="vm.edit">
             Title:<input type="text" name="title" ng-model="vm.task.title"> <br>
             Details:<input type="text"name="details" ng-model="vm.task.details"> <br>
-            Date:<input type="text" name="date" ng-model="vm.task.date">
+            Date:<input type="datetime-local" name="date" ng-model="vm.task.date">
             <input type="submit">
     </form>
 </ul>
