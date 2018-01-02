@@ -12,10 +12,9 @@ app.config(['$routeProvider', function($routeProvider) {
 app.controller('View2Ctrl', function(todoService) {
   var vm = this; 
 
-  vm.add = add;
+  vm.addTask = addTask;
 
-  function add(){
-    todoService.add(vm.task);
-
+  function addTask(){
+    todoService.addTask(vm.task);
   }
 });

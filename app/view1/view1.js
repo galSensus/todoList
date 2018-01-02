@@ -10,39 +10,29 @@ app.config(['$routeProvider', function($routeProvider) {
   });
 }]);
   
-app.service('todoService', function($http){
+app.service('todoService', function($http, $q){
 
-  this.add = add;
-  this.save = save;
+  this.addTask = addTask;
+  this.getTasks = getTasks;
   this.todoList = [];
-  var index = 0;
 
-  function add(task){
-    task.id = index;
-    this.todoList.push(task);
-    index++;
-    save(task);
-  }
-
-  function save(task){
+  function addTask(task){
     debugger;
     $http.post("//localhost/todoList/api/task/addTask", task).success(function(resp){
       debugger;
       var ans = resp;
     });
-
-
   }
 
-  function getData(){
-    $http.get('//localhost/todoList/api/values').success(function(resp){
-      debugger;
-      var ans = resp;
+  function getTasks(){
+    var defer = $q.defer();
+    $http.get("//localhost/todoList/api/task/getTasks").then(function(resp){
+      defer.resolve(resp);
+    }, function(err){
+      defer.reject(err);
     });
+    return defer.promise;
   }
-
-
-
 });
 
 app.controller('View1Ctrl', function(todoService) {
@@ -51,11 +41,15 @@ app.controller('View1Ctrl', function(todoService) {
   this.edit = false;
   this.showEdit = showEdit;
   this.editTask = editTask;
-  vm.task;
+  vm.todoList = [];
 
-  var text = localStorage.getItem("todoList");
-  var obj = JSON.parse(text);
-  vm.todoList = obj;
+  init();
+
+  function init(){
+    todoService.getTasks().then(function(resp){
+      vm.todoList = resp.data;
+    });
+  }
 
   function showEdit(task){
     this.edit = true;
