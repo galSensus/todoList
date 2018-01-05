@@ -13,13 +13,25 @@ app.config(['$routeProvider', function($routeProvider) {
 app.service('todoService', function($http, $q){
 
   this.addTask = addTask;
+  this.editTask = editTask;
   this.getTasks = getTasks;
+  this.deleteTask = deleteTask;
   this.todoList = [];
 
   function addTask(task){
-    debugger;
     $http.post("//localhost/todoList/api/task/addTask", task).success(function(resp){
-      debugger;
+      var ans = resp;
+    });
+  }
+
+  function editTask(task){
+    $http.put("//localhost/todoList/api/task/editTask", task).success(function(resp){
+      var ans = resp;
+    });
+  }
+
+  function deleteTask(taskId){
+    $http.post("//localhost/todoList/api/task/deleteTask", taskId).success(function(resp){
       var ans = resp;
     });
   }
@@ -38,9 +50,10 @@ app.service('todoService', function($http, $q){
 app.controller('View1Ctrl', function(todoService) {
 
   var vm = this;
-  this.edit = false;
+  vm.edit = false;
   this.showEdit = showEdit;
   this.editTask = editTask;
+  vm.deleteTask = deleteTask;
   vm.todoList = [];
 
   init();
@@ -52,13 +65,18 @@ app.controller('View1Ctrl', function(todoService) {
   }
 
   function showEdit(task){
-    this.edit = true;
-    vm.task = task;
+    vm.edit = !vm.edit;
+    var date = new Date(task.Date);
+    task.Date = date;
+    vm.selectedTask = task;
   }
 
-  function editTask(){
+  function editTask(task){
+    todoService.editTask(task);
+  }
+
+  function deleteTask(taskId){
     debugger;
-    vm.todoList[vm.task.id] = vm.task;
-    todoService.save(vm.todoList);
+    todoService.deleteTask(taskId);
   }
 });

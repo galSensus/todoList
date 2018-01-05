@@ -14,7 +14,7 @@ app.controller('View2Ctrl', function(todoService) {
 
   vm.addTask = addTask;
 
-  function addTask(){
-    todoService.addTask(vm.task);
+  function addTask(task){
+    todoService.addTask(task);
   }
 });
