@@ -31,7 +31,7 @@ app.service('todoService', function($http, $q){
   }
 
   function deleteTask(taskId){
-    $http.post("//localhost/todoList/api/task/deleteTask", taskId).success(function(resp){
+    $http.delete("//localhost/todoList/api/task/deleteTask?taskId="+taskId).success(function(resp){
       var ans = resp;
     });
   }
@@ -77,6 +77,11 @@ app.controller('View1Ctrl', function(todoService) {
 
   function deleteTask(taskId){
     debugger;
-    todoService.deleteTask(taskId);
+    taskId = taskId.toString();
+    todoService.deleteTask(taskId.toString());
+  // .then(function(resp){
+  //     var index = _.findIndex(todoList, {TaskId: taskId});
+  //     todoList.splice(index,1);
+  //   });
   }
 });
